@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>What humans are in space?</h1>
-    <div class="human" v-for="human in humans" :key="human.name">
+    <div class="app__humans" v-for="human in humans" :key="human.name">
       <Human :name="human.name"/>
     </div>
   </div>
@@ -29,7 +29,8 @@ export default {
         this.humans = res.data.people;
       })
       .catch(e => {
-        console.log(e);
+        // eslint-disable-next-line
+        console.error(e);
       })
   }
 }
@@ -37,7 +38,14 @@ export default {
 
 <style>
 body {
-  background-color: #838BE3;
+  background-image: url('../assets/backstars.png');
+  background-size: contain;
+  background-repeat: repeat;
+  background-color: #0E1933;
+}
+
+.app__humans {
+  display: inline-block;
 }
 
 #app {
@@ -47,5 +55,9 @@ body {
   text-align: center;
   color: white;
   margin-top: 60px;
+}
+
+p {
+  margin: 0;
 }
 </style>
