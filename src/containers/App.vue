@@ -1,7 +1,11 @@
 <template>
   <div id="app">
     <h1>What humans are in space?</h1>
-    <div class="app__humans" v-for="human in humans" :key="human.name">
+    <div
+      class="app__humans"
+      v-for="human in humans"
+      :key="human.name"
+    >
       <Human :name="human.name"/>
     </div>
   </div>
@@ -31,7 +35,7 @@ export default {
       .catch(e => {
         // eslint-disable-next-line
         console.error(e);
-      })
+      });
   }
 }
 </script>
