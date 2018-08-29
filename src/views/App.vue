@@ -8,23 +8,28 @@
     >
       <Human :name="human.name"/>
     </div>
+    <InfoBox v-bind:class="{ 'app__info-box--hide': !showInfoBox }" />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+
 import Human from '../components/Human.vue'
+import InfoBox from '../components/InfoBox.vue'
 
 const HUMANS_IN_SPACE = 'http://api.open-notify.org/astros.json';
 
 export default {
   name: 'app',
   components: {
-    Human
+    Human,
+    InfoBox
   },
   data () {
     return {
-      humans: []
+      humans: [],
+      showInfoBox: true
     }
   },
   created () {
@@ -50,6 +55,7 @@ body {
 
 .app__humans {
   display: inline-block;
+  position: relative;
 }
 
 #app {
@@ -59,6 +65,10 @@ body {
   text-align: center;
   color: white;
   margin-top: 60px;
+}
+
+.app__info-box--hide {
+  display: none;
 }
 
 p {
