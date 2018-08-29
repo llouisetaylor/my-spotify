@@ -4,13 +4,14 @@
       class="human__svg"
       src="../assets/human-in-space.png"
       alt="A waving astronaut"
-      :style="{transform:`rotate(${rotation}deg)`}"
+      :style="{transform:`translateY(${verticalPosition}px) rotate(${rotation}deg)`}"
       @mouseover="showToolTip = true"
       @mouseleave="showToolTip = false"
     />
-    <div v-show="showToolTip" class="human__tooltip">
-      <Tooltip :name="name"/>
-    </div>
+    <Tooltip
+      :name="name"
+      v-show="showToolTip"
+    />
   </div>
 </template>
 
@@ -25,14 +26,16 @@ export default {
   data () {
     return {
       showToolTip: false,
-      rotation: 0
+      rotation: 0,
+      verticalPosition: 0
     }
   },
   props: {
     name: String
   },
   created () {
-    this.rotation = Math.random()*70 - 35;
+    this.rotation = Math.random()*360;
+    this.verticalPosition = Math.random()*(window.innerHeight*0.5);
   }
 }
 </script>
@@ -43,11 +46,11 @@ export default {
     position: relative;
     margin: 40px;
     transform: translatey(0px);
-	  animation: float 4s ease-in-out infinite;
+    animation: float 4s ease-in-out infinite;
 
     &__svg {
       height: 220px;
-  }
+    }
   }
 
   @keyframes float {
