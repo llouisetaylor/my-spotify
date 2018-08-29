@@ -37,22 +37,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss">
   .human {
     cursor: pointer;
     position: relative;
     margin: 40px;
     transform: translatey(0px);
 	  animation: float 4s ease-in-out infinite;
-  }
 
-  .human__tooltip {
-    position: absolute;
-    z-index: 1;
+    &__svg {
+      height: 220px;
   }
-
-  .human__svg {
-    height: 160px;
   }
 
   @keyframes float {
