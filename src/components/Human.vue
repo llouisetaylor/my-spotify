@@ -1,13 +1,14 @@
 <template>
   <div class="human">
-    <img
-      class="human__svg"
-      src="../assets/human-in-space.png"
-      alt="A waving astronaut"
-      :style="{transform:`translateY(${verticalPosition}px) rotate(${rotation}deg)`}"
-      @mouseover="showToolTip = true"
-      @mouseleave="showToolTip = false"
-    />
+    <button @click="showAboutHuman(name)">
+      <img
+        src="../assets/human-in-space.png"
+        alt="A waving astronaut"
+        :style="{transform: `rotate(${rotation}deg)`}"
+        @mouseover="showToolTip = true"
+        @mouseleave="showToolTip = false"
+      />
+    </button>
     <Tooltip
       :name="name"
       v-show="showToolTip"
@@ -26,30 +27,30 @@ export default {
   data () {
     return {
       showToolTip: false,
-      rotation: 0,
-      verticalPosition: 0
+      rotation: 0
     }
   },
   props: {
-    name: String
+    name: String,
+    showAboutHuman: Function
   },
   created () {
-    this.rotation = Math.random()*360;
-    this.verticalPosition = Math.random()*(window.innerHeight*0.5);
+    this.rotation = Math.random() * 90 - 45;
   }
 }
 </script>
 
 <style lang="scss">
   .human {
-    cursor: pointer;
+    display: inline-block;
     position: relative;
     margin: 40px;
-    transform: translatey(0px);
     animation: float 4s ease-in-out infinite;
 
-    &__svg {
-      height: 220px;
+    button {
+      cursor: pointer;
+      background: transparent;
+      border: none;
     }
   }
 

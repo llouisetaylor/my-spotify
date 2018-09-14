@@ -1,19 +1,25 @@
 <template>
   <div id="app">
     <h1>What humans are in space?</h1>
-    <div
-      class="app__humans"
-      v-for="human in humans"
-      :key="human.name"
-    >
-      <Human :name="human.name"/>
+    <div class="app__humans">
+      <Human
+        :name="human.name"
+        v-for="human in humans"
+        :key="human.name"
+        :showAboutHuman="showAboutHuman"
+      />
     </div>
-    <InfoBox v-bind:class="{ 'app__info-box--hide': !showInfoBox }" />
+    <InfoBox
+      v-show="showInfoBox && !isLoading"
+      :text="aboutHuman"
+      :hideAboutHuman="hideAboutHuman"
+    />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import DOMPurify from 'dompurify'
 
 import Human from '../components/Human.vue'
 import InfoBox from '../components/InfoBox.vue'
@@ -29,18 +35,52 @@ export default {
   data () {
     return {
       humans: [],
-      showInfoBox: true
+      showInfoBox: false,
+      aboutHuman: '',
+      isLoading: false
     }
   },
-  created () {
-    axios.get(HUMANS_IN_SPACE)
-      .then(res => {
-        this.humans = res.data.people;
-      })
-      .catch(e => {
-        // eslint-disable-next-line
+  async created () {
+    try {
+      const response = await axios.get(HUMANS_IN_SPACE);
+      this.humans = response.data.people;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  methods: {
+    async getWikiTitle(searchParam) {
+      this.isLoading = true;
+      const SEARCH_WIKI = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${searchParam}%20astronaut&prop=info&inprop=url&utf8=&format=json`
+
+      try {
+        const response = await axios.get(SEARCH_WIKI);
+        const wikiPageTitle = response.data.query.search[0].title
+        this.getWikiContent(wikiPageTitle);
+      } catch (e) {
         console.error(e);
-      });
+      }
+    },
+    async getWikiContent(wikiPageTitle) {
+      const CONTENT_WIKI = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=${wikiPageTitle}`
+
+      try {
+        const response = await axios.get(CONTENT_WIKI);
+        const pages = response.data.query.pages;
+        const firstPage = Object.keys(pages)[0];
+        this.aboutHuman = DOMPurify.sanitize(pages[firstPage].extract);
+        this.isLoading = false;
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    showAboutHuman(name) {
+      this.getWikiTitle(name);
+      this.showInfoBox = true;
+    },
+    hideAboutHuman() {
+      this.showInfoBox = false;
+    }
   }
 }
 </script>
@@ -53,11 +93,6 @@ body {
   background-color: #0E1933;
 }
 
-.app__humans {
-  display: inline-block;
-  position: relative;
-}
-
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -65,10 +100,6 @@ body {
   text-align: center;
   color: white;
   margin-top: 60px;
-}
-
-.app__info-box--hide {
-  display: none;
 }
 
 p {

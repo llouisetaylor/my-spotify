@@ -1,33 +1,24 @@
 <template>
-  <div
-    class="info-box"
-    v-bind:class="{'info-box--hide': !showModal}"
-  >
+  <div class="info-box">
     <button
       class="info-box__close-button info-box__contents"
-      v-on:click="closeModal()"
+      @click="hideAboutHuman()"
     >
         CLOSE
     </button>
-
-    <p class="info-box__text info-box__contents">
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus tempor leo arcu, sed fermentum eros sagittis id. Cras iaculis mi sed erat accumsan, non auctor elit tristique. Aliquam congue sagittis lorem, id feugiat ante euismod at. Cras risus ex, volutpat at varius semper, scelerisque at odio. Phasellus sollicitudin ligula felis, ut sollicitudin enim semper luctus. Aliquam diam elit, tempor sed justo sit amet, congue viverra eros. Maecenas faucibus augue nisl, in scelerisque nibh pulvinar vitae. Maecenas et dapibus nibh. Sed ullamcorper eleifend posuere. Donec congue, erat dignissim lacinia tempor, purus risus aliquam purus, eu ornare urna odio nec dui. Ut in rutrum libero. Sed libero erat, interdum dignissim feugiat et, faucibus a quam. Etiam vitae molestie diam. Sed mattis finibus tincidunt.
-    </p>
+    <p
+      class="info-box__text info-box__contents"
+      v-html="text"
+    ></p>
   </div>
 </template>
 
 <script>
 export default {
   name: 'infobox',
-  data () {
-    return {
-      showModal: true
-    }
-  },
-  methods: {
-    closeModal: function() {
-      this.showModal = false
-    }
+  props: {
+    text: String,
+    hideAboutHuman: Function
   }
 }
 </script>
