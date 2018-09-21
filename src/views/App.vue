@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <h1>What humans are in space? 💫</h1>
-    <p class="app__subtitle">Click on a human to find out more about them.</p>
+    <p class="app__subtitle">Click on an astronaut to find out more about them.</p>
     <div class="app__humans">
       <Human
         :name="human.name"
