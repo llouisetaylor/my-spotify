@@ -87,10 +87,12 @@ export default {
     0% {
       width: 0;
       height: $border-width;
+      padding: 0;
     }
     40% {
       width: 0;
       height: $info-box-height;
+      padding: 0;
     }
     100% {
       width: $info-box-width;
