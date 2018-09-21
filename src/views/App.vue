@@ -56,7 +56,6 @@ export default {
     },
     async getWikiTitle(searchParam) {
       const SEARCH_WIKI = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${searchParam}%20astronaut&prop=info&inprop=url&utf8=&format=json`
-      console.log(searchParam, SEARCH_WIKI)
       try {
         const response = await axios.get(SEARCH_WIKI);
         this.humanName = response.data.query.search[0].title
