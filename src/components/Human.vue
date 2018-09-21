@@ -1,5 +1,8 @@
 <template>
-  <div class="human">
+  <div
+    class="human"
+    :style="`animation: float ${Math.random() * 4 + 3}s ease-in-out infinite;`"
+  >
     <button
       @click="showAboutHuman(name)"
       :aria-label="`Read about ${name}`"
@@ -49,7 +52,6 @@ export default {
     display: inline-block;
     position: relative;
     margin: 0 40px;
-    animation: float 4s ease-in-out infinite;
 
     &__button-text {
       display: none;
