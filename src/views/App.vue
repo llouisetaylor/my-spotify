@@ -10,7 +10,8 @@
       />
     </div>
     <InfoBox
-      v-show="showInfoBox && !isLoading"
+      v-show="showInfoBox"
+      :humanName="humanName"
       :text="aboutHuman"
       :hideAboutHuman="hideAboutHuman"
     />
@@ -36,46 +37,47 @@ export default {
     return {
       humans: [],
       showInfoBox: false,
-      aboutHuman: '',
-      isLoading: false
+      humanName: '',
+      aboutHuman: ''
     }
   },
   async created () {
-    try {
-      const response = await axios.get(HUMANS_IN_SPACE);
-      this.humans = response.data.people;
-    } catch (e) {
-      console.error(e);
-    }
+    this.getHumans();
   },
   methods: {
-    async getWikiTitle(searchParam) {
-      this.isLoading = true;
-      const SEARCH_WIKI = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${searchParam}%20astronaut&prop=info&inprop=url&utf8=&format=json`
-
+    async getHumans() {
       try {
-        const response = await axios.get(SEARCH_WIKI);
-        const wikiPageTitle = response.data.query.search[0].title
-        this.getWikiContent(wikiPageTitle);
+        const response = await axios.get(HUMANS_IN_SPACE);
+        this.humans = response.data.people;
       } catch (e) {
         console.error(e);
       }
     },
-    async getWikiContent(wikiPageTitle) {
-      const CONTENT_WIKI = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=${wikiPageTitle}`
+    async getWikiTitle(searchParam) {
+      const SEARCH_WIKI = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${searchParam}%20astronaut&prop=info&inprop=url&utf8=&format=json`
+      console.log(searchParam, SEARCH_WIKI)
+      try {
+        const response = await axios.get(SEARCH_WIKI);
+        this.humanName = response.data.query.search[0].title
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async getWikiContent() {
+      const CONTENT_WIKI = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=${this.humanName}`
 
       try {
         const response = await axios.get(CONTENT_WIKI);
         const pages = response.data.query.pages;
         const firstPage = Object.keys(pages)[0];
         this.aboutHuman = DOMPurify.sanitize(pages[firstPage].extract);
-        this.isLoading = false;
       } catch (e) {
         console.error(e);
       }
     },
-    showAboutHuman(name) {
-      this.getWikiTitle(name);
+    async showAboutHuman(name) {
+      const wikiTitle = await this.getWikiTitle(name);
+      const wikiContent = await this.getWikiContent();
       this.showInfoBox = true;
     },
     hideAboutHuman() {
