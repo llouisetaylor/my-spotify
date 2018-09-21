@@ -85,7 +85,7 @@ export default {
 
     @media screen and (max-width: 900px) {
       margin: 0;
-      animation: none;
+      animation: none !important;
       width: 100%;
     }
   }
