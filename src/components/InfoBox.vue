@@ -26,22 +26,29 @@ export default {
 </script>
 
 <style lang="scss">
+  $info-box-height: 300px;
+  $info-box-width: 800px;
   $border-width: 10px;
   $info-box-skew: 10deg;
 
   .info-box {
-    position: absolute;
-    overflow: hidden;
-    width: 50%;
+    padding: 50px;
+    box-sizing: border-box;
+    width: $info-box-width;
+    height: $info-box-height;
+
     right: 5vw;
     bottom: 5vh;
+    position: absolute;
+
+    overflow: scroll;
     border-left: $border-width solid #82B3D0;
     background: #434384;
     transform: skewX(-$info-box-skew);
     animation: expandInfoBox 800ms cubic-bezier(0.19, 1, 0.22, 1);
 
-    &--hide {
-      display: none;
+    h2 {
+      margin: 0 0 20px 0;
     }
 
     &__contents {
@@ -49,11 +56,7 @@ export default {
 
       @media only screen and (max-width: 900px) {
         transform: none;
-    }
-
-    &__text {
-      padding: 50px;
-      box-sizing: border-box;
+      }
     }
 
     &__close-button {
@@ -67,6 +70,7 @@ export default {
       border: none;
       font-size: 20px;
       color: white;
+    }
 
     @media only screen and (max-width: 900px) {
       width: 90%;
@@ -86,11 +90,10 @@ export default {
     }
     40% {
       width: 0;
-      height: 20%;
+      height: $info-box-height;
     }
     100% {
-      width: 50%;
-      height: 20%;
+      width: $info-box-width;
     }
   }
 </style>
