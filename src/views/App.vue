@@ -1,6 +1,7 @@
 <template>
-  <div id="app">
-    <h1>What humans are in space?</h1>
+  <div class="app">
+    <h1>What humans are in space? 💫</h1>
+    <p class="app__subtitle">Click on a human to find out more about them.</p>
     <div class="app__humans">
       <Human
         :name="human.name"
@@ -87,7 +88,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss">
 body {
   background-image: url('../assets/backstars.png');
   background-size: contain;
@@ -95,16 +96,27 @@ body {
   background-color: #0E1933;
 }
 
-#app {
+.app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: white;
   margin-top: 60px;
+  height: 100vh;
+  overflow: hidden;
+
+  &__subtitle {
+    font-size: 18px;
+    margin-bottom: 40px;
+  }
 }
 
 p {
   margin: 0;
+}
+
+button {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
 }
 </style>
