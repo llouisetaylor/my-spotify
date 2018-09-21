@@ -27,6 +27,7 @@ export default {
 
 <style lang="scss">
   $border-width: 10px;
+  $info-box-skew: 10deg;
 
   .info-box {
     position: absolute;
@@ -36,8 +37,7 @@ export default {
     bottom: 5vh;
     border-left: $border-width solid #82B3D0;
     background: #434384;
-    transform: skewX(-10deg);
-    opacity: 0.95;
+    transform: skewX(-$info-box-skew);
     animation: expandInfoBox 800ms cubic-bezier(0.19, 1, 0.22, 1);
 
     &--hide {
@@ -45,7 +45,10 @@ export default {
     }
 
     &__contents {
-      transform: skewX(10deg);
+      transform: skewX($info-box-skew);
+
+      @media only screen and (max-width: 900px) {
+        transform: none;
     }
 
     &__text {
@@ -65,9 +68,14 @@ export default {
       font-size: 20px;
       color: white;
 
-      &:hover {
-        color: lightblue;
-      }
+    @media only screen and (max-width: 900px) {
+      width: 90%;
+      height: fit-content;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      right: unset;
+      animation: none;
     }
   }
 
