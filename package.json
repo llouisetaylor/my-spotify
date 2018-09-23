@@ -5,7 +5,8 @@
   "scripts": {
     "start": "node ./src/api/server.js",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "deploy": "./deploy.sh"
   },
   "dependencies": {
     "axios": "^0.18.0",
