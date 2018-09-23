@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "node ./src/api/server.js",
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "deploy": "./deploy.sh"
+    "build": "vue-cli-service build"
   },
   "dependencies": {
     "axios": "^0.18.0",
