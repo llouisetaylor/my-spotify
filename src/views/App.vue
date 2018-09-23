@@ -26,7 +26,7 @@ import DOMPurify from 'dompurify'
 import Human from '../components/Human.vue'
 import InfoBox from '../components/InfoBox.vue'
 
-const HUMANS_IN_SPACE = 'http://api.open-notify.org/astros.json';
+const HUMANS_IN_SPACE = 'https://humans-in-space.herokuapp.com/';
 
 export default {
   name: 'app',
