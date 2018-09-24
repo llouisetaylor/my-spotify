@@ -30,7 +30,7 @@
         />
         Could you be the next human in space?
         <br/>
-        Find out what it takes to become an astronaut.
+        Find out what it takes to become an astronaut!
       </a>
     </div>
 
