@@ -1,21 +1,39 @@
 <template>
   <div class="app">
     <h1>What humans are in space? 💫</h1>
-    <p class="app__subtitle">Click on an astronaut to find out more about them.</p>
-    <div class="app__humans">
-      <Human
-        :name="human.name"
-        v-for="human in humans"
-        :key="human.name"
-        :showAboutHuman="showAboutHuman"
+
+    <div class="app__humans-container" v-show="isLoading === false && humans.length > 0">
+      <p class="app__subtitle">Click on an astronaut to find out more about them.</p>
+      <div class="app__humans">
+        <Human
+          :name="human.name"
+          v-for="human in humans"
+          :key="human.name"
+          :showAboutHuman="showAboutHuman"
+        />
+      </div>
+      <InfoBox
+        v-show="showInfoBox"
+        :humanName="humanName"
+        :text="aboutHuman"
+        :hideAboutHuman="hideAboutHuman"
       />
     </div>
-    <InfoBox
-      v-show="showInfoBox"
-      :humanName="humanName"
-      :text="aboutHuman"
-      :hideAboutHuman="hideAboutHuman"
-    />
+
+    <div class="app__no-humans" v-show="isLoading === false && humans.length === 0">
+      <p class="app__subtitle">It looks rather lonely out there...</p>
+      <a href="https://astronauts.nasa.gov/">
+        <img
+          class="app__rocket"
+          src="https://ubisafe.org/images/rocket-transparent-space-6.png"
+          alt=""
+        />
+        Could you be the next human in space?
+        <br/>
+        Find out what it takes to become an astronaut.
+      </a>
+    </div>
+
   </div>
 </template>
 
@@ -39,7 +57,8 @@ export default {
       humans: [],
       showInfoBox: false,
       humanName: '',
-      aboutHuman: ''
+      aboutHuman: '',
+      isLoading: true
     }
   },
   async created () {
@@ -47,11 +66,14 @@ export default {
   },
   methods: {
     async getHumans() {
+      this.isLoading = true;
       try {
         const response = await axios.get(HUMANS_IN_SPACE);
         this.humans = response.data.people;
+        this.isLoading = false;
       } catch (e) {
         console.error(e);
+        this.isLoading = false;
       }
     },
     async getWikiTitle(searchParam) {
@@ -88,6 +110,8 @@ export default {
 </script>
 
 <style lang="scss">
+
+/* Global styles */
 body {
   background-image: url('../assets/backstars.png');
   background-size: contain;
@@ -95,6 +119,15 @@ body {
   background-color: #0E1933;
 }
 
+p {
+  margin: 0;
+}
+
+button {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+}
+
+/* Scoped styles */
 .app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -109,13 +142,24 @@ body {
     font-size: 18px;
     margin-bottom: 40px;
   }
+
+  &__rocket {
+    display: block;
+    margin: 30px auto;
+    height: 300px;
+  }
+
+  a {
+  background: #434384;
+  color: white;
+  font-size: 20px;
+  line-height: 1.5;
+
+  &:hover {
+    background: white;
+    color: #434384;
+  }
+}
 }
 
-p {
-  margin: 0;
-}
-
-button {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-}
 </style>
