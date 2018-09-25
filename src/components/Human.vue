@@ -11,29 +11,17 @@
         src="../assets/human-in-space.png"
         alt=""
         :style="{transform: `rotate(${rotation}deg)`}"
-        @mouseover="showToolTip = true"
-        @mouseleave="showToolTip = false"
       />
       <span class="human__button-text">{{name}}</span>
     </button>
-    <Tooltip
-      :name="name"
-      v-show="showToolTip"
-    />
   </div>
 </template>
 
 <script>
-import Tooltip from './Tooltip.vue'
-
 export default {
   name: 'human',
-  components: {
-    Tooltip
-  },
   data () {
     return {
-      showToolTip: false,
       rotation: 0
     }
   },
