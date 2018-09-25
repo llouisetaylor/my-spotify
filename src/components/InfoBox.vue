@@ -1,26 +1,70 @@
 <template>
-  <div class="info-box">
-    <button
-      class="info-box__close-button info-box__contents"
-      @click="hideAboutHuman()"
+  <div
+    class="mask"
+    @click="closeInfoBox()"
+  >
+    <div
+      class="info-box"
+      role="dialog"
+      aria-labelledby="dialog-title"
+      aria-describedby="dialog-body"
+      @click.stop
     >
-        CLOSE
-    </button>
-    <h2>{{ humanName }}</h2>
-    <p
-      class="info-box__text info-box__contents"
-      v-html="text"
-    ></p>
+      <button
+        id="close-button"
+        class="info-box__close-button info-box__contents"
+        @click="closeInfoBox()"
+      >
+          CLOSE
+      </button>
+      <h2 id="dialog-title">{{ humanName }}</h2>
+      <p
+        id="dialog-body"
+        class="info-box__text info-box__contents"
+        v-html="text"
+      ></p>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'infobox',
+  data () {
+    return {
+      focusedElBeforeOpen: {}
+    }
+  },
   props: {
     humanName: String,
     text: String,
-    hideAboutHuman: Function
+    closeInfoBox: Function,
+  },
+  mounted () {
+    this.focusedElBeforeOpen = document.activeElement;
+    document.addEventListener("keydown", this.handleKeyDown);
+    document.getElementById('close-button').focus();
+  },
+  methods : {
+    handleKeyDown(e) {
+      switch (e.keyCode) {
+        case 27:
+          this.closeInfoBox();
+          break;
+        case 9:
+          e.preventDefault();
+          document.getElementById('close-button').focus();
+          break
+        default:
+          break;
+      }
+    }
+  },
+  beforeDestroy () {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  },
+  destroyed() {
+    this.focusedElBeforeOpen.focus();
   }
 }
 </script>
@@ -31,6 +75,17 @@ export default {
   $border-width: 10px;
   $info-box-skew: 10deg;
 
+  .mask {
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 30, .5);
+    transition: opacity .3s ease;
+  }
+
   .info-box {
     padding: 50px;
     box-sizing: border-box;
@@ -40,6 +95,7 @@ export default {
     right: 5vw;
     bottom: 5vh;
     position: absolute;
+    z-index: 2;
 
     overflow: scroll;
     border-left: $border-width solid #82B3D0;
@@ -62,7 +118,7 @@ export default {
     &__close-button {
       cursor: pointer;
       position: absolute;
-      z-index: 1;
+      z-index: 3;
       right: 0;
       top: 0;
       margin: 10px;
