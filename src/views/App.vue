@@ -2,25 +2,19 @@
   <div class="app">
     <h1>What humans are in space? 💫</h1>
 
-    <div class="app__humans-container" v-show="isLoading === false && humans.length > 0">
+    <div class="app__humans-container" v-if="isLoading === false && humans.length > 0">
       <p class="app__subtitle">Click on an astronaut to find out more about them.</p>
       <div class="app__humans">
         <Human
           :name="human.name"
           v-for="human in humans"
           :key="human.name"
-          :showAboutHuman="showAboutHuman"
+          :openInfoBox="openInfoBox"
         />
       </div>
-      <InfoBox
-        v-show="showInfoBox"
-        :humanName="humanName"
-        :text="aboutHuman"
-        :hideAboutHuman="hideAboutHuman"
-      />
     </div>
 
-    <div class="app__no-humans" v-show="isLoading === false && humans.length === 0">
+    <div class="app__no-humans" v-if="isLoading === false && humans.length === 0">
       <p class="app__subtitle">It looks rather lonely out there...</p>
       <a href="https://astronauts.nasa.gov/">
         <img
@@ -33,6 +27,13 @@
         Find out what it takes to become an astronaut!
       </a>
     </div>
+
+    <InfoBox
+      v-if="showInfoBox"
+      :humanName="humanName"
+      :text="aboutHuman"
+      :closeInfoBox="closeInfoBox"
+    />
 
   </div>
 </template>
@@ -55,8 +56,8 @@ export default {
   data () {
     return {
       humans: [],
-      showInfoBox: false,
       humanName: '',
+      showInfoBox: false,
       aboutHuman: '',
       isLoading: true
     }
@@ -97,12 +98,12 @@ export default {
         console.error(e);
       }
     },
-    async showAboutHuman(name) {
+    async openInfoBox(name) {
       const wikiTitle = await this.getWikiTitle(name);
       const wikiContent = await this.getWikiContent();
       this.showInfoBox = true;
     },
-    hideAboutHuman() {
+    closeInfoBox() {
       this.showInfoBox = false;
     }
   }

@@ -4,7 +4,7 @@
     :style="`animation: float ${Math.random() * 4 + 3}s ease-in-out infinite;`"
   >
     <button
-      @click="showAboutHuman(name)"
+      @click="openInfoBox(name)"
       :aria-label="`Read about ${name}`"
     >
       <img
@@ -27,7 +27,7 @@ export default {
   },
   props: {
     name: String,
-    showAboutHuman: Function
+    openInfoBox: Function
   },
   created () {
     this.rotation = Math.random() * 90 - 45;
