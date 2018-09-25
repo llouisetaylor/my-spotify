@@ -137,7 +137,6 @@ button {
   color: white;
   margin-top: 60px;
   height: 100vh;
-  overflow: hidden;
 
   &__subtitle {
     font-size: 18px;
