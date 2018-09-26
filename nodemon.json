@@ -1,0 +1,6 @@
+{
+  "watch": [
+    "./src/routes/server.js"
+  ],
+  "exec": "node ./src/routes/server.js"
+}
