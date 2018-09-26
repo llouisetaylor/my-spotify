@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/api/server.js",
-    "serve": "vue-cli-service serve",
+    "start": "node ./src/routes/server.js",
     "build": "vue-cli-service build"
   },
   "dependencies": {
