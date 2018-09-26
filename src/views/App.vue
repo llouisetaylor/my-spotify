@@ -45,7 +45,7 @@ import DOMPurify from 'dompurify'
 import Human from '../components/Human.vue'
 import InfoBox from '../components/InfoBox.vue'
 
-const HUMANS_IN_SPACE = 'https://humans-in-space.herokuapp.com/';
+const HUMANS_IN_SPACE = '/api/astronauts';
 
 export default {
   name: 'app',
