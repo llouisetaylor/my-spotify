@@ -78,7 +78,7 @@ export default {
       }
     },
     async getWikiTitle(searchParam) {
-      const SEARCH_WIKI = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${searchParam}%20astronaut&prop=info&inprop=url&utf8=&format=json`
+      const SEARCH_WIKI = `/api/astronauts/name/${searchParam}`
       try {
         const response = await axios.get(SEARCH_WIKI);
         this.humanName = response.data.query.search[0].title
@@ -87,7 +87,7 @@ export default {
       }
     },
     async getWikiContent() {
-      const CONTENT_WIKI = `https://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=${this.humanName}`
+      const CONTENT_WIKI = `/api/astronauts/bio/${this.humanName}`
 
       try {
         const response = await axios.get(CONTENT_WIKI);
