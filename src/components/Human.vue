@@ -6,19 +6,20 @@
     >
       {{name}}
       <div :style="`animation: float ${Math.random() * 4 + 3}s ease-in-out infinite;`">
-        <img
-          src="../assets/human-in-space.png"
-          alt=""
-          :style="{transform: `rotate(${rotation}deg)`}"
-        />
+        <Astronaut :style="{transform: `rotate(${rotation}deg)`}"/>
       </div>
     </button>
   </div>
 </template>
 
 <script>
+import Astronaut from '../assets/human-in-space.svg'
+
 export default {
   name: 'human',
+  components: {
+    Astronaut
+  },
   data () {
     return {
       rotation: 0
@@ -55,7 +56,7 @@ export default {
       font-weight: bold;
       color: lighten(#c6e2ff, 20%);
 
-      img {
+      svg {
         @media screen and (max-width:900px) {
           display: none;
         }
