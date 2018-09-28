@@ -1,5 +1,8 @@
 <template>
   <div class="app">
+    <a class="github-corner" aria-label="View source on GitHub" href="https://github.com/llouisetaylor/humans-in-space">
+      <GithubIcon />
+    </a>
     <h1>What humans are in space? 💫</h1>
 
     <div class="app__humans-container" v-if="isLoading === false && humans.length > 0">
@@ -40,10 +43,11 @@
 
 <script>
 import axios from 'axios';
-import DOMPurify from 'dompurify'
+import DOMPurify from 'dompurify';
 
-import Human from '../components/Human.vue'
-import InfoBox from '../components/InfoBox.vue'
+import GithubIcon from '../assets/github-icon.svg';
+import Human from '../components/Human.vue';
+import InfoBox from '../components/InfoBox.vue';
 
 const HUMANS_IN_SPACE = '/api/astronauts';
 
@@ -51,18 +55,19 @@ export default {
   name: 'app',
   components: {
     Human,
-    InfoBox
+    InfoBox,
+    GithubIcon
   },
-  data () {
+  data() {
     return {
       humans: [],
       humanName: '',
       showInfoBox: false,
       aboutHuman: '',
       isLoading: true
-    }
+    };
   },
-  async created () {
+  async created() {
     this.getHumans();
   },
   methods: {
@@ -82,17 +87,17 @@ export default {
       }
     },
     async getWikiTitle(searchParam) {
-      const SEARCH_WIKI = `/api/astronauts/name/${searchParam}`
+      const SEARCH_WIKI = `/api/astronauts/name/${searchParam}`;
       const response = await axios.get(SEARCH_WIKI);
 
       if (response.data.query.search.length > 0) {
-        this.humanName = response.data.query.search[0].title
+        this.humanName = response.data.query.search[0].title;
       } else {
         throw new Error(`No wikipedia page found for ${searchParam}`);
       }
     },
     async getWikiContent() {
-      const CONTENT_WIKI = `/api/astronauts/bio/${this.humanName}`
+      const CONTENT_WIKI = `/api/astronauts/bio/${this.humanName}`;
 
       const response = await axios.get(CONTENT_WIKI);
       if (response.data.query) {
@@ -109,7 +114,7 @@ export default {
         const wikiContent = await this.getWikiContent();
       } catch (e) {
         console.error(e);
-        this.aboutHuman = 'We couldn\'t find a wikipedia page for this human 😭'
+        this.aboutHuman = 'We couldn\'t find a wikipedia page for this human 😭';
       }
       this.showInfoBox = true;
     },
@@ -117,17 +122,16 @@ export default {
       this.showInfoBox = false;
     }
   }
-}
+};
 </script>
 
 <style lang="scss">
-
 /* Global styles */
 body {
   background-image: url('../assets/backstars.png');
   background-size: contain;
   background-repeat: repeat;
-  background-color: #0E1933;
+  background-color: #0e1933;
 }
 
 p {
@@ -135,12 +139,38 @@ p {
 }
 
 button {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+}
+
+.github-corner:hover .octo-arm {
+  animation: octocat-wave 560ms ease-in-out;
+}
+@keyframes octocat-wave {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  20%,
+  60% {
+    transform: rotate(-25deg);
+  }
+  40%,
+  80% {
+    transform: rotate(10deg);
+  }
+}
+@media (max-width: 500px) {
+  .github-corner:hover .octo-arm {
+    animation: none;
+  }
+  .github-corner .octo-arm {
+    animation: octocat-wave 560ms ease-in-out;
+  }
 }
 
 /* Scoped styles */
 .app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -160,16 +190,15 @@ button {
   }
 
   a {
-  background: #434384;
-  color: white;
-  font-size: 20px;
-  line-height: 1.5;
+    background: #434384;
+    color: white;
+    font-size: 20px;
+    line-height: 1.5;
 
-  &:hover {
-    background: white;
-    color: #434384;
+    &:hover {
+      background: white;
+      color: #434384;
+    }
   }
 }
-}
-
 </style>
