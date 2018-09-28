@@ -3,8 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "node ./src/routes/server.js",
-    "heroku-postbuild": "vue-cli-service build"
+    "start": "npm run dev-ui | npm run dev-api",
+    "dev-ui": "vue-cli-service serve --port 8000",
+    "dev-api": "nodemon",
+    "heroku-postbuild": "vue-cli-service build",
+    "serve": "node ./src/routes/server.js"
+  },
+  "vue": {
+    "devServer": {
+      "proxy": "http://localhost:8001"
+    }
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -20,6 +28,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.15",
     "@vue/cli-service": "^3.0.0-beta.15",
+    "nodemon": "^1.18.4",
     "vue-template-compiler": "^2.5.16"
   },
   "postcss": {

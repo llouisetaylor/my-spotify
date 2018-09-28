@@ -4,7 +4,7 @@ const path = require('path');
 
 const { astronautRouter } = require('./astronauts')
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 const app = express();
 app.use(morgan('tiny'));
 
