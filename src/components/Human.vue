@@ -44,6 +44,13 @@ export default {
     position: relative;
     margin: 0 40px;
 
+    &:hover {
+      .human__left-arm {
+        transform-origin: 20% 40%;
+        animation: wave 300ms 2;
+      }
+    }
+
     button {
       cursor: pointer;
       margin-bottom: 1px;
@@ -87,6 +94,18 @@ export default {
     }
     100% {
       transform: translatey(0px);
+    }
+  }
+
+  @keyframes wave {
+    0% {
+      transform: rotate(0);
+    }
+    50% {
+      transform: rotate(-5deg);
+    }
+    100% {
+      transform: rotate(0);
     }
   }
 </style>
