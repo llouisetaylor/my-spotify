@@ -34,7 +34,7 @@
 <script>
 export default {
   name: 'infobox',
-  data () {
+  data() {
     return {
       focusedElBeforeOpen: {}
     };
@@ -44,7 +44,7 @@ export default {
     text: String,
     closeInfoBox: Function
   },
-  mounted () {
+  mounted() {
     this.focusedElBeforeOpen = document.activeElement;
     document.addEventListener('keydown', this.handleKeyDown);
     document.getElementById('close-button').focus();
@@ -64,7 +64,7 @@ export default {
       }
     }
   },
-  beforeDestroy () {
+  beforeDestroy() {
     document.removeEventListener("keydown", this.handleKeyDown);
   },
   destroyed() {
