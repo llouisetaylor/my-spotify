@@ -70,7 +70,11 @@ export default {
       this.isLoading = true;
       try {
         const response = await axios.get(HUMANS_IN_SPACE);
-        this.humans = response.data.people;
+        if (!response.data.people) {
+          throw new Error('No people present in response');
+        } else {
+          this.humans = response.data.people;
+        }
         this.isLoading = false;
       } catch (e) {
         console.error(e);
@@ -79,28 +83,34 @@ export default {
     },
     async getWikiTitle(searchParam) {
       const SEARCH_WIKI = `/api/astronauts/name/${searchParam}`
-      try {
-        const response = await axios.get(SEARCH_WIKI);
+      const response = await axios.get(SEARCH_WIKI);
+
+      if (response.data.query.search.length > 0) {
         this.humanName = response.data.query.search[0].title
-      } catch (e) {
-        console.error(e);
+      } else {
+        throw new Error(`No wikipedia page found for ${searchParam}`);
       }
     },
     async getWikiContent() {
       const CONTENT_WIKI = `/api/astronauts/bio/${this.humanName}`
 
-      try {
-        const response = await axios.get(CONTENT_WIKI);
+      const response = await axios.get(CONTENT_WIKI);
+      if (response.data.query) {
         const pages = response.data.query.pages;
         const firstPage = Object.keys(pages)[0];
         this.aboutHuman = DOMPurify.sanitize(pages[firstPage].extract);
-      } catch (e) {
-        console.error(e);
+      } else {
+        throw new Error(`No wikipedia content found for ${this.humanName}`);
       }
     },
     async openInfoBox(name) {
-      const wikiTitle = await this.getWikiTitle(name);
-      const wikiContent = await this.getWikiContent();
+      try {
+        const wikiTitle = await this.getWikiTitle(name);
+        const wikiContent = await this.getWikiContent();
+      } catch (e) {
+        console.error(e);
+        this.aboutHuman = 'We couldn\'t find a wikipedia page for this human 😭'
+      }
       this.showInfoBox = true;
     },
     closeInfoBox() {
