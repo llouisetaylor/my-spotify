@@ -25,6 +25,13 @@
             class="info-box__text info-box__text"
             v-html="text"
           ></p>
+          <a 
+            :v-if="typeof wikiPageId === Number"
+            :href="`http://en.wikipedia.org/?curid=${wikiPageId}`" 
+            class="info-box__link"
+          >
+            Find out more on Wikipedia
+          </a>
         </div>
       </div>
     </div>
@@ -42,6 +49,7 @@ export default {
   props: {
     humanName: String,
     text: String,
+    wikiPageId: Number,
     closeInfoBox: Function
   },
   mounted() {
@@ -112,6 +120,10 @@ $info-box-skew: 10deg;
     @media only screen and (max-width: 900px) {
       transform: none;
     }
+  }
+
+  &__link {
+    font-size: 14px;
   }
 
   &__inner {

@@ -19,7 +19,7 @@
 
     <div class="app__no-humans" v-if="isLoading === false && humans.length === 0">
       <p class="app__subtitle">It looks rather lonely out there...</p>
-      <a href="https://astronauts.nasa.gov/">
+      <a href="https://astronauts.nasa.gov/" class="app__link">
         <img
           class="app__rocket"
           src="https://ubisafe.org/images/rocket-transparent-space-6.png"
@@ -35,6 +35,7 @@
       v-if="showInfoBox"
       :humanName="humanName"
       :text="aboutHuman"
+      :wikiPageId="wikiPageId"
       :closeInfoBox="closeInfoBox"
     />
 
@@ -65,6 +66,7 @@ export default {
       humanName: '',
       showInfoBox: false,
       aboutHuman: '',
+      wikiPageId: null,
       isLoading: true
     };
   },
@@ -105,6 +107,7 @@ export default {
         const pages = response.data.query.pages;
         const firstPage = Object.keys(pages)[0];
         this.aboutHuman = DOMPurify.sanitize(pages[firstPage].extract);
+        this.wikiPageId = pages[firstPage].pageid;
       } else {
         throw new Error(`No wikipedia content found for ${this.humanName}`);
       }
@@ -190,10 +193,13 @@ button {
     height: 300px;
   }
 
+  &__link {
+    font-size: 18px;
+  }
+
   a {
     background: #434384;
     color: white;
-    font-size: 20px;
     line-height: 1.5;
 
     &:hover {
