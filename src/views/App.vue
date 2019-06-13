@@ -44,6 +44,7 @@
 <script>
 import axios from 'axios';
 import DOMPurify from 'dompurify';
+import bugsnagClient from '../lib/bugsnag';
 
 import GithubIcon from '../assets/github-icon.svg';
 import Human from '../components/Human.vue';
@@ -82,7 +83,7 @@ export default {
         }
         this.isLoading = false;
       } catch (e) {
-        console.error(e);
+        bugsnagClient.notify(e);
         this.isLoading = false;
       }
     },
@@ -113,7 +114,7 @@ export default {
         const wikiTitle = await this.getWikiTitle(name);
         const wikiContent = await this.getWikiContent();
       } catch (e) {
-        console.error(e);
+        bugsnagClient.notify(e);
         this.aboutHuman = 'We couldn\'t find a wikipedia page for this human 😭';
       }
       this.showInfoBox = true;
