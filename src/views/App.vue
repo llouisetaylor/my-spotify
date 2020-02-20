@@ -120,7 +120,7 @@ export default {
         const wikiContent = await this.getWikiContent();
       } catch (e) {
         bugsnagClient.notify(e);
-        this.aboutHuman = 'We couldn\'t find a wikipedia page for this human 😭';
+        this.aboutHuman = 'I couldn\'t find a wikipedia page for this human 😭';
       }
       this.showInfoBox = true;
     },

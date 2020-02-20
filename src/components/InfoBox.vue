@@ -83,7 +83,9 @@ export default {
 
 <style lang="scss">
 $info-box-height: 300px;
+$info-box-height-mobile: 400px;
 $info-box-width: 800px;
+$info-box-width-mobile: 90vw;
 $border-width: 10px;
 $info-box-skew: 10deg;
 
@@ -131,6 +133,10 @@ $info-box-skew: 10deg;
     max-width: 100%;
     width: $info-box-width;
     height: $info-box-height;
+
+    @media only screen and (max-width: 900px) {
+      height: unset;
+    }
   }
 
   &__content {
@@ -154,13 +160,14 @@ $info-box-skew: 10deg;
   }
 
   @media only screen and (max-width: 900px) {
-    width: 90%;
-    height: fit-content;
-    top: 22%;
+    height: $info-box-height-mobile;
+    width: $info-box-width-mobile;
+    right: unset;
+    top: 15%;
     left: 50%;
     transform: translateX(-50%);
-    right: unset;
-    animation: none;
+    overflow-y: scroll;
+    animation: expandInfoBoxMobile 800ms cubic-bezier(0.19, 1, 0.22, 1);
   }
 }
 
@@ -177,6 +184,22 @@ $info-box-skew: 10deg;
   }
   100% {
     width: $info-box-width;
+  }
+}
+
+@keyframes expandInfoBoxMobile {
+  0% {
+    width: 0;
+    height: $border-width;
+    padding: 0;
+  }
+  40% {
+    width: 0;
+    height: $info-box-height-mobile;
+    padding: 0;
+  }
+  100% {
+    width: $info-box-width-mobile;
   }
 }
 </style>
