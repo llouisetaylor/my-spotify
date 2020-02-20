@@ -15,7 +15,7 @@ app.use('/img', express.static(path.resolve(__dirname, '../../', 'dist/img')));
 app.use('/api/astronauts', astronautRouter);
 
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../', 'public/index.html'));
+  res.sendFile(path.resolve(__dirname, '../../', 'dist/index.html'));
 })
 
 app.listen(PORT, () => { console.log(`Server is running on port: ${PORT}`) });
