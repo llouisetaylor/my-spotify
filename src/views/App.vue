@@ -8,12 +8,14 @@
     <div class="app__humans-container" v-if="isLoading === false && humans.length > 0">
       <p class="app__subtitle">Click on an astronaut to find out more about them.</p>
       <div class="app__humans">
-        <Human
-          :name="human.name"
-          v-for="human in humans"
-          :key="human.name"
-          :openInfoBox="openInfoBox"
-        />
+        <div class="app__humans-inner-wrap">
+          <Human
+            :name="human.name"
+            v-for="human in humans"
+            :key="human.name"
+            :openInfoBox="openInfoBox"
+          />
+        </div>
       </div>
     </div>
 
@@ -188,7 +190,12 @@ button {
   }
 
   &__humans {
-    @media screen and (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+  }
+
+  &__humans-inner-wrap {
+    @media screen and (max-width: 900px) {
       display: flex;
       max-height: 340px; // height of astronaut
       overflow-y: hidden;
