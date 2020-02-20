@@ -187,6 +187,15 @@ button {
     margin-bottom: 40px;
   }
 
+  &__humans {
+    @media screen and (max-width: 768px) {
+      display: flex;
+      max-height: 340px; // height of astronaut
+      overflow-y: hidden;
+      overflow-x: scroll;
+    }
+  }
+
   &__rocket {
     display: block;
     margin: 30px auto;

@@ -156,7 +156,7 @@ $info-box-skew: 10deg;
   @media only screen and (max-width: 900px) {
     width: 90%;
     height: fit-content;
-    top: 15%;
+    top: 22%;
     left: 50%;
     transform: translateX(-50%);
     right: unset;

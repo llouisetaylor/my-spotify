@@ -62,26 +62,11 @@ export default {
       font-size: 16px;
       font-weight: bold;
       color: lighten(#c6e2ff, 20%);
-
-      svg {
-        @media screen and (max-width:900px) {
-          display: none;
-        }
-      }
-
-      @media screen and (max-width:900px) {
-        opacity: 0.85;
-        background: #C6E2FF;
-        color: black;
-        width: 100%;
-        font-size: 26px;
-        animation: none !important;
-      }
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 525px) {
       margin: 0;
-      width: 100%;
+      min-width: 100vw;
     }
   }
 
